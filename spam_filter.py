@@ -35,3 +35,44 @@ for i, row in df.head().iterrows():
     print(f"\nMessage {i + 1}")
     print("Spam:", row["is_spam"])
     print("Text:", row["message_content"])
+
+
+#----------------------------
+# 5. PreProcessing Data Cleaning
+#----------------------------
+
+df = df.dropna(
+    subset=["message_content", "is_spam"]
+).copy()
+
+print("\nAfter dropping missing values, dataset shape:", df.shape)
+
+#------------------------------
+# Remove exact duplicate rows
+#------------------------------
+
+df = df.drop_duplicates().copy()
+
+# Clean whitespace from messages
+df["message_content"] = (
+    df["message_content"]
+    .astype(str)
+    .str.strip()
+)
+
+
+# Remove empty messages
+df = df[df["message_content"] != ""].copy()
+
+# Ensure labels are valid binary values
+df["is_spam"] = pd.to_numeric(
+    df["is_spam"], errors="coerce"
+)
+
+df = df[df["is_spam"].isin([0, 1])].copy()
+df["is_spam"] = df["is_spam"].astype(int)
+
+df = df.reset_index(drop=True)
+
+print("Shape after cleaning:", df.shape)
+print(df["is_spam"].value_counts())

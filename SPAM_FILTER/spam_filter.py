@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[31]:
+# In[1]:
 
 
 import pandas as pd
@@ -19,7 +19,7 @@ print("\nClass distribution:")
 print(df["is_spam"].value_counts())
 
 
-# In[32]:
+# In[2]:
 
 
 # -------------------------
@@ -31,7 +31,7 @@ print(df.isnull().sum())
 
 
 
-# In[33]:
+# In[3]:
 
 
 # -------------------------
@@ -41,7 +41,7 @@ print(df.isnull().sum())
 print("\nDuplicate rows:", df.duplicated().sum())
 
 
-# In[34]:
+# In[4]:
 
 
 # -------------------------
@@ -56,7 +56,7 @@ for i, row in df.head().iterrows():
     print("Text:", row["message_content"])
 
 
-# In[35]:
+# In[5]:
 
 
 #----------------------------
@@ -98,4 +98,25 @@ df = df.reset_index(drop=True)
 
 print("Shape after cleaning:", df.shape)
 print(df["is_spam"].value_counts())
+
+
+# In[6]:
+
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Initialize the TF-IDF Vectorizer (keeping the top 5,000 most common words)
+
+vectorizer = TfidfVectorizer(max_features=5000)
+
+# Convert text messages into numerical features (X) and assign labels (y)
+
+x = vectorizer.fit_transform(df["message_content"])
+y = df["is_spam"].values
+
+
+print("Shape of feature matrix (X):", x.shape)
+print("X - Matrix", x)
+print("Shape of label vector (y):", y.shape)
+print("y-label", y)
 

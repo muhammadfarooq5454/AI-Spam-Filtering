@@ -120,3 +120,25 @@ print("X - Matrix", x)
 print("Shape of label vector (y):", y.shape)
 print("y-label", y)
 
+
+# In[7]:
+
+
+from sklearn.model_selection import train_test_split
+
+# Split data: 80% for training, 20% for testing
+
+x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.2, random_state=42)
+
+
+print("Training set shape (X_train):", x_train.shape)
+print("Training set (X_train):", x_train)
+print("Testing set shape (X_test):", x_test.shape)
+print("Testing set (X_test):", x_test)
+
+print("Training labels shape (y_train):", y_train.shape)
+print("Training labels (y_train):", y_train)
+print("Testing labels shape (y_test):", y_test.shape)
+print("Testing labels (y_test):", y_test)
+
